@@ -1,3 +1,3 @@
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=30&duration=3000&pause=800&color=FF69B4&center=true&vCenter=true&multiline=true&width=700&height=100&lines=💖+THIS+IS+MAYA+XMD+WHATSAPP+BOT.....;✨+ELITE+AUTOMATION+SYSTEM" />
+  <img src="https://readme-typing-svg.demolab.com?font=Share+Tech+Mono&size=26&duration=1500&pause=500&color=FF1493&center=true&vCenter=true&width=700&lines=💀+THIS+IS+MAYA+XMD+WHATSAPP+BOT.....;⚡+SYSTEM+INITIALIZING...;🔥+READY+TO+DEPLOY" />
 </p>
