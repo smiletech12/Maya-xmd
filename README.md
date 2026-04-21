@@ -18,7 +18,7 @@
   <img src="https://img.shields.io/badge/GET%20SESSION-SERVER%201-FF1493?style=for-the-badge&logo=server&logoColor=white"/>
 </a>
 
-<a href="YOUR_SERVER2_LINK">
+<a href="https://maya-xmd.onrender.com"
   <img src="https://img.shields.io/badge/GET%20SESSION-SERVER%202-FF69B4?style=for-the-badge&logo=server&logoColor=white"/>
 </a>
 
