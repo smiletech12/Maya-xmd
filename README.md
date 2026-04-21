@@ -4,5 +4,5 @@
 
 
 <p align="center">
-  <img src="https://i.ibb.co/VW8B7h4s/file-000000007e4071f791b2e98b8935b23c.png" width="300" alt="MAYA XMD"/>
+  <img src="https://i.ibb.co/VW8B7h4s/file-000000007e4071f791b2e98b8935b23c.png" width="600" alt="MAYA XMD"/>
 </p>
