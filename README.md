@@ -31,6 +31,13 @@
 
 
 
+![Typing SVG](https://readme-typing-svg.demolab.com?font=Black+Ops+One&size=50&pause=1000&color=FF1493&center=true&vCenter=true&width=910&height=100&lines=DOWNLOAD+ZIP+FILE+👇)
+<p align="center">
+
+
+
+[![Download ZIP](https://img.shields.io/badge/DOWNLOAD-ZIP-FF1493?style=for-the-badge)](https://github.com/smiletech12/Maya-xmd/archive/refs/heads/main.zip)
+
 
 
 - 🤖 Auto Reply System (AI + Custom Responses)
