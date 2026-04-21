@@ -12,6 +12,10 @@
 
 
 <p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Share+Tech+Mono&size=35&pause=800&color=FF1493&center=true&vCenter=true&width=600&lines=🔐+GET+SESSION+ID+👇;⚡+CHOOSE+YOUR+SERVER" />
+</p>
+
+<p align="center">
 
 <a href="YOUR_SERVER1_LINK">
   <img src="https://img.shields.io/badge/GET%20SESSION-SERVER%201-FF1493?style=for-the-badge&logo=server&logoColor=white"/>
