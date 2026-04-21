@@ -68,7 +68,7 @@ const { handleAutoTyping } = require('./start/supremeCmds/autotyping');
 const { handleAIChatbot } = require('./start/supremeCmds/chatbot');
 
 // Default menu image URL (replaced local files)
-const DEFAULT_MENU_IMAGE = "https://files.catbox.moe/mxddss.png";
+const DEFAULT_MENU_IMAGE = "https://i.ibb.co/VW8B7h4s/file-000000007e4071f791b2e98b8935b23c.png";
 
 //Shazam
 const acr = new acrcloud({
