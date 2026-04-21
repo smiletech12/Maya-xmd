@@ -1,1 +1,1 @@
-![Typing SVG](https://readme-typing-svg.demolab.com?font=Share+Tech+Mono&size=48&pause=800&duration=1200&gradient=FF1493,FF69B4,FF00FF&center=true&vCenter=true&width=910&height=100&lines=💀+MAYA+XMD+WHATSAPP+BOT;⚡+SYSTEM+INITIALIZING...;💖+KEEP+LOVING+MAYA+XMD)
+![Typing SVG](https://readme-typing-svg.demolab.com?font=Black+Ops+One&size=50&pause=1000&color=FF1493&center=true&vCenter=true&width=910&height=100&lines=MAYA+XMD+WHATSAPP+BOT;KEEP+LOVING+MAYA+XMD)
