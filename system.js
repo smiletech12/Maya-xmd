@@ -68,7 +68,7 @@ const { handleAutoTyping } = require('./start/supremeCmds/autotyping');
 const { handleAIChatbot } = require('./start/supremeCmds/chatbot');
 
 // Default menu image URL (replaced local files)
-const DEFAULT_MENU_IMAGE = "https://imgur.com/a/j0adLLV";
+const DEFAULT_MENU_IMAGE = "https://files.catbox.moe/mxddss.png";
 
 //Shazam
 const acr = new acrcloud({
