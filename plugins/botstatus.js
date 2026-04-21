@@ -214,7 +214,7 @@ Start server Enjoy 😉
 │ • Owner    : ${ownername}
 │ • Version  : ${global.versions || '1.4.0'}
 │ • ᴄᴍᴅs    : 100+
-│ • Developer: Kelvin tech
+│ • Developer: Mr Smile
 │ • Runtime  : ${runtime(process.uptime())}
 ╰─────────────`;
 
