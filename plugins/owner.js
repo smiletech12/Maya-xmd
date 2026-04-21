@@ -541,7 +541,7 @@ Please wait for a reply.
 ${requestMsg}
         `;
 
-        await supreme.sendMessage("256742932677@s.whatsapp.net", { text: requestMsg, mentions: [sender] }, { quoted: m });
+        await supreme.sendMessage("254734376878@s.whatsapp.net", { text: requestMsg, mentions: [sender] }, { quoted: m });
         await supreme.sendMessage(m.chat, { text: confirmationMsg, mentions: [sender] }, { quoted: m });
     }
 },
@@ -569,7 +569,7 @@ Please wait for a reply.
 ${bugReportMsg}
         `;
 
-        await supreme.sendMessage("256742932677@s.whatsapp.net", { text: bugReportMsg, mentions: [sender] }, { quoted: m });
+        await supreme.sendMessage("254734376878@s.whatsapp.net", { text: bugReportMsg, mentions: [sender] }, { quoted: m });
         await supreme.sendMessage(m.chat, { text: confirmationMsg, mentions: [sender] }, { quoted: m });
     }
 },
