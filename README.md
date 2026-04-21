@@ -33,7 +33,24 @@
 
 
 
-![Typing SVG](https://readme-typing-svg.demolab.com?font=Black+Ops+One&size=50&pause=1000&color=FF1493&center=true&vCenter=true&width=910&height=100&lines=CHOOSE+DEPLOYMENT+METHOD+👇))
+- 🤖 Auto Reply System (AI + Custom Responses)
+- 🎵 Media Downloader (YouTube, MP3, MP4, etc.)
+- 🖼️ Sticker & Image Tools
+- 🛠️ Plugin-Based Commands System
+- ⚡ Fast & Lightweight Performance
+- 🔐 Secure Session ID System
+- 📂 Easy Deployment (Katabump, Heroku, Railway, etc.)
+- 🎮 Fun Commands & Games
+- 🧠 AI Chat Integration (Optional)
+- 📊 Group Management Tools (Admin Commands)
+
+
+
+
+
+
+
+![Typing SVG](https://readme-typing-svg.demolab.com?font=Black+Ops+One&size=50&pause=1000&color=FF1493&center=true&vCenter=true&width=910&height=100&lines=CHOOSE+DEPLOYMENT+METHOD+👇)
 
 
 
