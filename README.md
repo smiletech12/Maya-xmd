@@ -61,7 +61,7 @@
   <img src="https://img.shields.io/badge/DEPLOY%20ON-KATABUMP-FF1493?style=for-the-badge&logo=rocket&logoColor=white"/>
 </a>
 
-<a href="YOUR_BOTHOSTING_LINK">
+<a href="https://control.bot-hosting.net/server/">
   <img src="https://img.shields.io/badge/DEPLOY%20ON-BOTHOSTING-FF69B4?style=for-the-badge&logo=server&logoColor=white"/>
 </a>
 
@@ -73,7 +73,7 @@
   <img src="https://img.shields.io/badge/DEPLOY%20ON-RAILWAY-FF1493?style=for-the-badge&logo=railway&logoColor=white"/>
 </a>
 
-<a href="YOUR_KOYEB_LINK">
+<a href="https://app.koyeb.com/services/new?service_type=web">
   <img src="https://img.shields.io/badge/DEPLOY%20ON-KOYEB-FF69B4?style=for-the-badge&logo=cloud&logoColor=white"/>
 </a>
 
