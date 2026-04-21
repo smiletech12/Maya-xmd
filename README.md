@@ -57,7 +57,7 @@
 
 <p align="center">
 
-<a href="YOUR_KATABUMP_LINK">
+<a href="https://dashboard.katabump.com/dashboard">
   <img src="https://img.shields.io/badge/DEPLOY%20ON-KATABUMP-FF1493?style=for-the-badge&logo=rocket&logoColor=white"/>
 </a>
 
