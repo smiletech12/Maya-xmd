@@ -638,16 +638,17 @@ const generateMenu = (plugins, ownername, prefixz, modeStatus, versions, latensi
     }
     totalCommands = uniqueCommands.size;
 
-    let menu = `┌─❖ *ＭＡＹＡ - ＸＭＤ* ❖─\n`;
-    menu += `├─• ᴜsᴇʀ: ${ownername}\n`;
-    menu += `├─• ʙᴏᴛ: ${global.botname}\n`;
-    menu += `├─• ᴍᴏᴅᴇ: ${mode === 'public' ? 'ᴘᴜʙʟɪᴄ' : 'ᴘʀɪᴠᴀᴛᴇ'}\n`;
-    menu += `├─• ᴘʀᴇғɪx: [ ${prefixz} ]\n`;
-    menu += `├─• ᴄᴍᴅs: ${totalCommands}+\n`;
-    menu += `├─• ᴠᴇʀsɪᴏɴ: ${versions}\n`;
-    menu += `├─• sᴘᴇᴇᴅ: ${latensie.toFixed(4)} ms\n`;
-    menu += `├─• 𝚁𝙰𝙼: ${progressBar(systemUsedMemory, totalMemory)}\n`;
-    menu += `└─• ᴅᴇᴠ: ☘ Ｍｒ Ｓｍｉｌｅ ☘\n`;
+     let menu = `╭━━━☢︎︎*☆ *ＭＡＹＡ - ＸＭＤ* ☆*☢︎︎━━━❍\n`;
+    menu += `┃❍│▸ ᴜsᴇʀ: ${ownername}\n`;
+    menu += `┃❍│▸ ʙᴏᴛ: ${global.botname}\n`;
+    menu += `┃❍│▸ ᴍᴏᴅᴇ: ${mode === 'public' ? 'ᴘᴜʙʟɪᴄ' : 'ᴘʀɪᴠᴀᴛᴇ'}\n`;
+    menu += `┃❍│▸ ᴘʀᴇғɪx: [ ${prefixz} ]\n`;
+    menu += `┃❍│▸ ᴄᴍᴅs: ${totalCommands}+\n`;
+    menu += `┃❍│▸ ᴠᴇʀsɪᴏɴ: ${versions}\n`;
+    menu += `┃❍│▸ sᴘᴇᴇᴅ: ${latensie.toFixed(4)} ms\n`;
+    menu += `┃❍│▸ 𝚁𝙰𝙼: ${progressBar(systemUsedMemory, totalMemory)}\n`;
+    menu += `┃❍│▸• ᴅᴇᴠ: ☘ Ｍｒ Ｓｍｉｌｅ ☘\n`;
+   menu += ` ╰━━━━━━━━━━━━━━━❍`;
     menu += `${readmore}\n`;
     
     for (const category in plugins) {
