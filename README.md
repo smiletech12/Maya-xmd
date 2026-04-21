@@ -85,7 +85,7 @@
 ```bash
 pkg update && pkg upgrade
 pkg install git nodejs
-git clone https://github.com/YOUR_USERNAME/maya-xmd
+git clone https://github.com/smiletech12/maya-xmd
 cd maya-xmd
 npm install
 npm start
