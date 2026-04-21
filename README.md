@@ -80,6 +80,17 @@
 </p>
 
 
+## ⚡ QUICK INSTALL
+
+```bash
+pkg update && pkg upgrade
+pkg install git nodejs
+git clone https://github.com/YOUR_USERNAME/maya-xmd
+cd maya-xmd
+npm install
+npm start
+```
+
 
 
 <p align="center">
