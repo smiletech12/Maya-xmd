@@ -118,7 +118,7 @@ Once your done creating and verifying the two account, move over to the next ste
 
 *NEXT STEPS*
 Next step is to fork the bot repository. Click the link
-https://github.com/Kevintech-hub/JUNE-X
+https://github.com/smiletech12/Maya-xmd
 
 Then download the zip file.
 
@@ -136,7 +136,7 @@ Start server Enjoy 😉
                 `.trim();
 
                 await supreme.sendMessage(from, {
-                    image: { url: 'https://files.catbox.moe/xd8cvb.jpg' },
+                    image: { url: 'https://i.ibb.co/VW8B7h4s/file-000000007e4071f791b2e98b8935b23c.png' },
                     caption: message,
                     contextInfo: {
                         mentionedJid: [m.sender],
@@ -144,7 +144,7 @@ Start server Enjoy 😉
                         isForwarded: true,
                         forwardedNewsletterMessageInfo: {
                             newsletterJid: '120363401548261516@newsletter',
-                            newsletterName: '🪀『JUNE-X』🪀',
+                            newsletterName: '🪀ＭＡＹＡ - ＸＭＤ 🪀',
                             serverMessageId: 143
                         }
                     }
@@ -302,8 +302,8 @@ Start server Enjoy 😉
         operate: async ({ supreme, m, reply }) => {
             try {
                 // GitHub repository details
-                const repoOwner = "Kevintech-hub";
-                const repoName = "JUNE-X";
+                const repoOwner = "smiletech12";
+                const repoName = "Maya-xmd";
                 const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}`;
                 
                 // Fetch repository data with error handling
@@ -335,11 +335,11 @@ Start server Enjoy 😉
 *GitHub Link:* 
 https://github.com/${repoOwner}/${repoName}
 
-*Session Id:* https://vinic-xmd-pairing-site-dsf-crew-devs.onrender.com/
+*Session Id:* COMMING SOON 
 ────────────────────────────────
 @${m.sender.split("@")[0]}👋, Don't forget to star and fork my repository!`;
 
-               const thumbnailBuffer = fs.readFileSync('./start/lib/Media/Images/Vesper3.jpg');
+               const thumbnailBuffer = fs.readFileSync('./start/lib/Media/tech.jpg');
                 
                 // Send the response with thumbnail
                 await supreme.sendMessage(
@@ -349,7 +349,7 @@ https://github.com/${repoOwner}/${repoName}
                         contextInfo: {
                             mentionedJid: [m.sender],
                             externalAdReply: {
-                                title: "JUNE-X repository",
+                                title: "ＭＡＹＡ - ＸＭＤ repository",
                                 body: `⭐ Star the repo to support development!`,
                                 thumbnail: thumbnailBuffer,
                                 mediaType: 1,
@@ -367,9 +367,9 @@ https://github.com/${repoOwner}/${repoName}
                 const fallbackInfo = `
 *BOT REPOSITORY*
 
-*Name:* JUNE-X
+*Name:* ＭＡＹＡ - ＸＭＤ
 *GitHub Link:* 
-https://github.com/Kevintech-hub/JUNE-X
+https://github.com/smiletech12/Maya-xmd
 
 @${m.sender.split("@")[0]}👋, Visit the repository for more info!`;
 
