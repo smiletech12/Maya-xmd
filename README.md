@@ -78,3 +78,22 @@
 </a>
 
 </p>
+
+
+
+
+<p align="center">
+
+<a href="https://wa.me/254734376878">
+  <img src="https://img.shields.io/badge/CONTACT%20OWNER-0734376878-FF1493?style=for-the-badge&logo=whatsapp&logoColor=white"/>
+</a>
+
+<a href="https://wa.me/254107065646">
+  <img src="https://img.shields.io/badge/CONTACT%20OWNER-0107065646-FF69B4?style=for-the-badge&logo=whatsapp&logoColor=white"/>
+</a>
+
+<a href="https://whatsapp.com/channel/0029Vb794NKBadmdwkPN6i0B">
+  <img src="https://img.shields.io/badge/JOIN%20CHANNEL-UPDATES-FF00FF?style=for-the-badge&logo=whatsapp&logoColor=white"/>
+</a>
+
+</p>
