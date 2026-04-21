@@ -11,9 +11,7 @@
 
 
 
-<p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Share+Tech+Mono&size=35&pause=800&color=FF1493&center=true&vCenter=true&width=600&lines=🔐+GET+SESSION+ID+👇;⚡+CHOOSE+YOUR+SERVER" />
-</p>
+![Typing SVG](https://readme-typing-svg.demolab.com?font=Black+Ops+One&size=50&pause=1000&color=FF1493&center=true&vCenter=true&width=910&height=100&lines=GET+SESSION+ID+👇;CHOOSE+SERVER+1+%7C+2+%7C+3)
 
 <p align="center">
 
