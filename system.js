@@ -68,7 +68,7 @@ const { handleAutoTyping } = require('./start/supremeCmds/autotyping');
 const { handleAIChatbot } = require('./start/supremeCmds/chatbot');
 
 // Default menu image URL (replaced local files)
-const DEFAULT_MENU_IMAGE = "https://imgur.com/a/j0adLLV";
+const DEFAULT_MENU_IMAGE = "https://i.ibb.co/VW8B7h4s/file-000000007e4071f791b2e98b8935b23c.png";
 
 //Shazam
 const acr = new acrcloud({
@@ -368,8 +368,8 @@ const Access = await checkAccess(m.sender);
                 p.id === botId.replace('@s.whatsapp.net', '@lid')
             );
             
-            const isBotAdmin = bot && (bot.admin === 'admin' || bot.admin === 'smileadmin');
-            const isSenderAdmin = participant && (participant.admin === 'admin' || participant.admin === 'smileadmin');
+            const isBotAdmin = bot && (bot.admin === 'admin' || bot.admin === 'superadmin');
+            const isSenderAdmin = participant && (participant.admin === 'admin' || participant.admin === 'superadmin');
 
             if (!bot) {
                 return { isSenderAdmin, isBotAdmin: true };
