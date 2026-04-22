@@ -1,8 +1,3 @@
-/*
- * Give credits to Kevindev
- * Contact me on +256742932677
- * Coding sounds louder 
- */
 
 require('./start/Core/developer');
 const fs = require('fs');
