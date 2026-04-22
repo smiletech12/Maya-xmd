@@ -357,7 +357,7 @@ module.exports = [
     {
         command: ['tinylink', 'shorten', 'shorturl', 'tinyurl'],
         operate: async ({ reply, prefix, text, axios }) => {
-            if (!text) return reply(`*Example:* ${prefix}shorten https://github.com/Kevintech-hub/Vinic-Xmd-`);
+            if (!text) return reply(`*Example:* ${prefix}shorten https://github.com/Kevintech-hub/Maya-xmd`);
             
             // Check if URL is valid
             if (!text.startsWith('http')) {
