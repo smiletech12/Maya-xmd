@@ -1,6 +1,6 @@
 /*
- Give credits to supreme 
- Contact me at 254798570132
+ Give credits to Kevin dev
+ Contact me at 256742932677
  Base creator and pterodactyl panels seller.
  
  Complete JUNE-X Bot - Full Version
@@ -13,9 +13,6 @@ process.on("uncaughtException", (err) => {
 
 console.clear();
 console.log('🚀 Starting ＭＡＹＡ - ＸＭＤ Complete Edition...');
-
-// Load environment variables from .env file
-require('dotenv').config();
 
 // ==================== REQUIREMENTS ====================
 const { 
@@ -65,11 +62,11 @@ const { makeInMemoryStore } = require("./start/lib/store/");
 const port = process.env.PORT || 3000;
 const timezones = global.timezones || settings.timezone || "Africa/Kampala";
 const msgRetryCounterCache = new NodeCache();
-const sessionDir = path.join(process.cwd(), 'sessions');
+const sessionDir = path.join(__dirname, 'sessions');
 const credsPath = path.join(sessionDir, 'creds.json');
 const loginFile = path.join(sessionDir, 'login.json');
-const MESSAGE_STORE_FILE = path.join(process.cwd(), 'message_backup.json');
-const SESSION_ERROR_FILE = path.join(process.cwd(), 'sessionErrorCount.json');
+const MESSAGE_STORE_FILE = path.join(__dirname, 'message_backup.json');
+const SESSION_ERROR_FILE = path.join(__dirname, 'sessionErrorCount.json');
 
 // ==================== GLOBAL VARIABLES ====================
 global.isBotConnected = false;
@@ -174,48 +171,52 @@ function saveErrorCount(data) {
 }
 
 async function loadSessionFromId() {
-    const sessionId = process.env.SESSION_ID || settings.SESSION_ID;
-    if (!sessionId) {
-        log('No SESSION_ID provided in .env or settings.js', 'info');
+    try {
+        if (!settings.SESSION_ID) {
+            log('No SESSION_ID provided', 'info');
+            return false;
+        }
+
+        log('Loading session from SESSION_ID...', 'auth');
+        
+        await fs.promises.mkdir(sessionDir, { recursive: true });
+        
+        // Handle MEGA.nz links
+        if (settings.SESSION_ID.includes('mega.nz')) {
+            log('Downloading from MEGA.nz...', 'auth');
+            const megaFileId = settings.SESSION_ID.split('/').pop();
+            const file = File.fromURL(`https://mega.nz/file/${megaFileId}`);
+            
+            const data = await new Promise((resolve, reject) => {
+                file.download((err, data) => {
+                    if (err) reject(err);
+                    else resolve(data);
+                });
+            });
+            
+            fs.writeFileSync(credsPath, data);
+            log('MEGA session loaded successfully', 'success');
+            return true;
+        }
+        
+        // Handle base64 sessions
+        const sessionMatch = settings.SESSION_ID.match(/(?:MAYA~)?(.+)/);
+        if (sessionMatch) {
+            const base64Data = sessionMatch[1];
+            const sessionData = Buffer.from(base64Data, 'base64');
+            
+            // Verify it's valid JSON
+            JSON.parse(sessionData.toString());
+            fs.writeFileSync(credsPath, sessionData);
+            log('Base64 session loaded successfully', 'success');
+            return true;
+        }
+        
+        return false;
+    } catch (error) {
+        log(`Failed to load session: ${error.message}`, 'error');
         return false;
     }
-
-    log('Loading session from SESSION_ID...', 'auth');
-    
-    await fs.promises.mkdir(sessionDir, { recursive: true });
-    
-    // Handle MEGA.nz links
-    if (sessionId.includes('mega.nz')) {
-        log('Downloading from MEGA.nz...', 'auth');
-        const megaFileId = sessionId.split('/').pop();
-        const file = File.fromURL(`https://mega.nz/file/${megaFileId}`);
-        
-        const data = await new Promise((resolve, reject) => {
-            file.download((err, data) => {
-                if (err) reject(err);
-                else resolve(data);
-            });
-        });
-        
-        fs.writeFileSync(credsPath, data);
-        log('MEGA session loaded successfully', 'success');
-        return true;
-    }
-    
-    // Handle base64 sessions
-    const sessionMatch = sessionId.match(/(?:MAYA~)?(.+)/);
-    if (sessionMatch) {
-        const base64Data = sessionMatch[1];
-        const sessionData = Buffer.from(base64Data, 'base64');
-        
-        // Verify it's valid JSON
-        JSON.parse(sessionData.toString());
-        fs.writeFileSync(credsPath, sessionData);
-        log('Base64 session loaded successfully', 'success');
-        return true;
-    }
-    
-    return false;
 }
 
 async function handle408Error(statusCode) {
@@ -285,7 +286,7 @@ function cleanupOldMessages() {
 
 // ==================== CLEANUP FUNCTIONS ====================
 function cleanupJunkFiles(sock) {
-    const tmpDir = path.join(process.cwd(), 'tmp');
+    const tmpDir = path.join(__dirname, 'tmp');
     if (!fs.existsSync(tmpDir)) return;
     
     fs.readdir(tmpDir, (err, files) => {
@@ -312,7 +313,7 @@ function cleanupJunkFiles(sock) {
 function createRequiredFolders() {
     const folders = ['tmp', 'assets', 'database', 'sessions'];
     folders.forEach(folder => {
-        const folderPath = path.join(process.cwd(), folder);
+        const folderPath = path.join(__dirname, folder);
         if (!fs.existsSync(folderPath)) {
             fs.mkdirSync(folderPath, { recursive: true });
             log(`Created folder: ${folder}`, 'system');
@@ -335,7 +336,7 @@ function detectPlatform() {
 async function loadAllPlugins() {
     try {
         const pluginManager = new PluginManager();
-        const pluginsDir = path.join(process.cwd(), 'Plugins');
+        const pluginsDir = path.join(__dirname, 'Plugins');
         
         if (!fs.existsSync(pluginsDir)) {
             fs.mkdirSync(pluginsDir, { recursive: true });
@@ -352,93 +353,46 @@ async function loadAllPlugins() {
     }
 }
 
-// ==================== IMPROVED PAIRING HANDLER ====================
-async function handlePairing(sock, retryCount = 0) {
-    const MAX_RETRIES = 2;
-    
+// ==================== PAIRING HANDLER ====================
+async function handlePairing(sock) {
     log('='.repeat(50), 'auth');
     log('PHONE NUMBER PAIRING', 'auth');
     log('='.repeat(50), 'auth');
+    console.log('');
     
-    const phoneInput = await question('📱 Enter your WhatsApp number (with country code, e.g., 254734376878): ');
-    const cleanNumber = phoneInput.replace(/[^0-9]/g, '');
+    const phoneNumber = await question('📱 Enter your WhatsApp number (with country code): ');
+    const cleanNumber = phoneNumber.replace(/[^0-9]/g, '');
     
-    // IMPROVED VALIDATION
-    if (!cleanNumber.match(/^[1-9][0-9]{9,14}$/)) {
-        log('Invalid! Use: countrycode + number (no leading zero, no spaces)', 'error');
-        log('Example: 2547XXXXXXX (not 07XXXXXXX)', 'error');
+    if (cleanNumber.length < 10) {
+        log('Invalid number! Must include country code', 'error');
         process.exit(1);
     }
     
-    log(`Requesting pairing code for ${cleanNumber}...`, 'auth');
-    
-    let timeout;
-    let connectionHandler;
+    log('Requesting pairing code...', 'auth');
     
     try {
-        await sleep(2000);
         const code = await sock.requestPairingCode(cleanNumber);
         const formattedCode = code.match(/.{1,4}/g)?.join(' ') || code;
         
         console.log('');
         log('='.repeat(50), 'success');
-        log(`PAIRING CODE: ${formattedCode}`, 'success');
+        log(`CODE: ${formattedCode}`, 'success');
         log('='.repeat(50), 'success');
+        console.log('');
         
-        log('📌 INSTRUCTIONS:', 'info');
+        log('Instructions:', 'info');
         log('1. Open WhatsApp on your phone', 'info');
-        log('2. Go to Settings → Linked Devices', 'info');
+        log('2. Go to Linked Devices', 'info');
         log('3. Tap "Link a Device"', 'info');
-        log('4. Enter this code (NOT a notification code)', 'info');
+        log('4. Enter the code above', 'info');
+        console.log('');
         
-        log('Waiting for device to link (2 minute timeout)...', 'auth');
+        log('Waiting for connection...', 'auth');
         await saveLoginMethod('pairing');
         
-        let linked = false;
-        
-        timeout = setTimeout(() => {
-            if (!linked) {
-                log('⏰ Pairing timeout. Check your phone and try again.', 'warn');
-                sock.ev.off('connection.update', connectionHandler);
-            }
-        }, 120000);
-        
-        connectionHandler = (update) => {
-            if (update.connection === 'open') {
-                linked = true;
-                clearTimeout(timeout);
-                log('✅ Device linked successfully!', 'success');
-                sock.ev.off('connection.update', connectionHandler);
-            }
-            if (update.lastDisconnect?.error) {
-                log(`Connection error: ${update.lastDisconnect.error.message}`, 'error');
-            }
-        };
-        
-        sock.ev.on('connection.update', connectionHandler);
-        
     } catch (error) {
-        if (timeout) clearTimeout(timeout);
-        if (connectionHandler) sock.ev.off('connection.update', connectionHandler);
-        
-        // Better error messages
-        if (error.message?.includes('405')) {
-            log('WhatsApp blocked this pairing attempt. Try using QR code instead.', 'error');
-        } else if (error.message?.includes('timeout')) {
-            log('Network timeout. Check your server internet connection.', 'error');
-        } else {
-            log(`Pairing failed: ${error.message}`, 'error');
-        }
-        
-        if (retryCount < MAX_RETRIES) {
-            log(`Retrying (${retryCount + 1}/${MAX_RETRIES}) in 5 seconds...`, 'warn');
-            await sleep(5000);
-            return handlePairing(sock, retryCount + 1);
-        } else {
-            log('Falling back to QR code mode...', 'warn');
-            // Enable QR mode and restart
-            sock.end(new Error('Pairing failed, restarting with QR'));
-        }
+        log(`Pairing failed: ${error.message}`, 'error');
+        process.exit(1);
     }
 }
 
@@ -464,13 +418,14 @@ async function sendWelcomeMessage(sock) {
 ├─❖ *Time:* ${moment().tz(timezones).format('HH:mm:ss')}
 ├─❖ *Date:* ${moment().tz(timezones).format('DD/MM/YYYY')}
 │
-╰─❖ *Powered by Ｍｒ Ｓｍｉｌｅ* ❖─╯
+╰─❖ *Powered by Mr Smile* ❖─╯
 
 > ${global.wm}`;
 
         await sock.sendMessage(botJid, { text: welcomeMsg });
         log('Welcome message sent to owner', 'success');
         
+        // Auto join group if configured
         if (settings.AUTO_JOIN_GROUP) {
             try {
                 const inviteCode = settings.AUTO_JOIN_GROUP.split('/').pop();
@@ -490,20 +445,29 @@ async function sendWelcomeMessage(sock) {
 async function startBot() {
     log('Initializing ＭＡＹＡ - ＸＭＤ...', 'system');
     
+    // Load error count
     global.errorRetryCount = loadErrorCount().count;
+    
+    // Create required folders
     createRequiredFolders();
     
+    // Check for existing session or load from SESSION_ID
     let hasValidSession = sessionExists();
     
-    if (!hasValidSession && (process.env.SESSION_ID || settings.SESSION_ID)) {
+    if (!hasValidSession && settings.SESSION_ID) {
         hasValidSession = await loadSessionFromId();
     }
     
+    // Load plugins
     await loadAllPlugins();
     
+    // Get Baileys version
     const { version } = await fetchLatestBaileysVersion();
+    
+    // Setup auth
     const { state, saveCreds } = await useMultiFileAuthState('./sessions');
     
+    // Create socket
     const sock = makeWASocket({
         version,
         logger: pino({ level: "silent" }),
@@ -525,14 +489,18 @@ async function startBot() {
     });
 
     await sleep(500);
+
+    // Bind store
     store.bind(sock.ev);
     
+    // Handle authentication
     if (!hasValidSession && !sock.authState.creds.registered) {
         await handlePairing(sock);
     } else {
         log('Using existing session', 'success');
     }
     
+    // ========== DECODE JID ==========
     sock.decodeJid = (jid) => {
         if (!jid) return jid;
         if (/:\d+@/gi.test(jid)) {
@@ -543,11 +511,15 @@ async function startBot() {
     };
     
     const botNumber = sock.decodeJid(sock.user?.id) || 'default';
+    
+    // ========== GET PUBLIC/PRIVATE MODE ==========
     const mode = await db.get(botNumber, 'mode', 'public');
     sock.public = mode === 'public';
     
+    // ========== MESSAGE HANDLER ==========
     sock.ev.on('messages.upsert', async (chatUpdate) => {
         try {
+            // Message backup
             for (const msg of chatUpdate.messages) {
                 if (!msg.message) continue;
                 const chatId = msg.key.remoteJid;
@@ -578,19 +550,24 @@ async function startBot() {
             const mek = chatUpdate.messages[0];
             if (!mek.message) return;
             
+            // Handle ephemeral messages
             if (Object.keys(mek.message)[0] === 'ephemeralMessage') {
                 mek.message = mek.message.ephemeralMessage.message;
             }
             
+            // Handle status updates
             if (mek.key?.remoteJid === 'status@broadcast') {
                 await handleStatusUpdate(sock, mek);
                 return;
             }
             
+            // Check if should process
             if (!sock.public && !mek.key.fromMe && chatUpdate.type === 'notify') return;
             
+            // Process message
             const m = smsg(sock, mek, store);
             
+            // Set message properties
             m.isGroup = m.chat.endsWith('@g.us');
             m.sender = await sock.decodeJid(m.fromMe && sock.user.id || m.participant || m.key.participant || m.chat || '');
             
@@ -612,6 +589,7 @@ async function startBot() {
                 m.participant = m.key.participant || '';
             }
             
+            // Call system handler
             require("./system")(sock, m, chatUpdate, store);
             
         } catch (err) {
@@ -619,6 +597,7 @@ async function startBot() {
         }
     });
     
+    // ========== CONTACTS UPDATE ==========
     sock.ev.on('contacts.update', (update) => {
         for (const contact of update) {
             const id = sock.decodeJid(contact.id);
@@ -628,10 +607,12 @@ async function startBot() {
         }
     });
     
+    // ========== CONNECTION UPDATE ==========
     sock.ev.on('connection.update', async (update) => {
         const { connection, lastDisconnect, qr } = update;
         
         if (qr) {
+            // QR is disabled, but just in case
             log('QR code received but pairing is disabled', 'warn');
         }
         
@@ -643,6 +624,7 @@ async function startBot() {
             
             log(`Connection closed: ${statusCode || errorMsg}`, 'warn');
             
+            // Check for permanent logout
             if (statusCode === DisconnectReason.loggedOut || errorMsg.includes('logged out')) {
                 log('Logged out! Clearing session...', 'error');
                 clearSessionFiles();
@@ -650,9 +632,11 @@ async function startBot() {
                 process.exit(1);
             }
             
+            // Handle 408 timeout
             const handled = await handle408Error(statusCode);
             if (handled) return;
             
+            // Reconnect
             log('Reconnecting in 5 seconds...', 'warn');
             await sleep(5000);
             startBot();
@@ -673,10 +657,12 @@ async function startBot() {
             log(`Prefix: ${global.prefix}`, 'info');
             console.log('');
             
+            // Send welcome message
             await sendWelcomeMessage(sock);
         }
     });
     
+    // ========== GROUP PARTICIPANTS UPDATE ==========
     sock.ev.on('group-participants.update', async (update) => {
         try {
             const botId = sock.decodeJid(sock.user.id);
@@ -694,10 +680,12 @@ async function startBot() {
                 const name = participant.split('@')[0];
                 const pushName = await sock.getName(participant) || name;
                 
+                // Welcome/Goodbye
                 if (welcomeEnabled) {
                     if (update.action === 'add') {
                         log(`👋 Welcome ${pushName} to ${metadata.subject}`, 'success');
                         
+                        // Get profile picture
                         let ppUrl;
                         try {
                             ppUrl = await sock.profilePictureUrl(participant, 'image');
@@ -721,6 +709,7 @@ async function startBot() {
                     }
                 }
                 
+                // Admin events
                 if (adminEventEnabled && update.author) {
                     const author = update.author.split('@')[0];
                     
@@ -744,6 +733,7 @@ async function startBot() {
         }
     });
     
+    // ========== CALL HANDLER ==========
     sock.ev.on('call', async (calls) => {
         try {
             const botId = sock.decodeJid(sock.user.id);
@@ -755,6 +745,7 @@ async function startBot() {
                 const caller = call.from.split('@')[0];
                 log(`📞 Call from ${caller} - Action: ${anticall}`, 'warn');
                 
+                // Check if caller is owner
                 const owners = await db.get(botId, 'owners', []);
                 const isOwner = owners.some(owner => caller.includes(owner.replace(/[^0-9]/g, '')));
                 
@@ -763,6 +754,7 @@ async function startBot() {
                     continue;
                 }
                 
+                // Rate limiting
                 const now = Date.now();
                 const lastWarn = global.recentCallers?.get(call.from) || 0;
                 const cooldown = 30 * 1000;
@@ -775,6 +767,7 @@ async function startBot() {
                 global.recentCallers.set(call.from, now);
                 setTimeout(() => global.recentCallers.delete(call.from), cooldown);
                 
+                // Send warning
                 const warnMsg = anticall === 'block' 
                     ? `🚫 *CALL BLOCKED*\n\nYour call to ${global.botname} has been blocked.\n\n> ${global.wm}`
                     : `🚫 *CALL REJECTED*\n\nPlease don't call the bot. Use messages instead.\n\n> ${global.wm}`;
@@ -783,6 +776,7 @@ async function startBot() {
                     await sock.sendMessage(call.from, { text: warnMsg });
                 } catch (e) {}
                 
+                // Reject/Block
                 try {
                     await sock.rejectCall(call.id, call.from);
                     
@@ -797,8 +791,12 @@ async function startBot() {
         }
     });
     
+    // ========== CREDS UPDATE ==========
     sock.ev.on('creds.update', saveCreds);
     
+    // ========== UTILITY FUNCTIONS ==========
+    
+    // Get name
     sock.getName = async (jid, withoutContact = false) => {
         try {
             if (jid.endsWith('@g.us')) {
@@ -813,10 +811,12 @@ async function startBot() {
         }
     };
     
+    // Send text
     sock.sendText = (jid, text, quoted = '', options = {}) => {
         return sock.sendMessage(jid, { text, ...options }, { quoted });
     };
     
+    // Download and save media
     sock.downloadAndSaveMediaMessage = async (message, filename, attachExtension = true) => {
         const quoted = message.msg || message;
         const mime = (message.msg || message).mimetype || '';
@@ -831,12 +831,13 @@ async function startBot() {
         const type = await FileType.fromBuffer(buffer);
         const ext = type?.ext || 'bin';
         const trueFileName = attachExtension ? `${filename}.${ext}` : filename;
-        const savePath = path.join(process.cwd(), 'tmp', trueFileName);
+        const savePath = path.join(__dirname, 'tmp', trueFileName);
 
         await fs.promises.writeFile(savePath, buffer);
         return savePath;
     };
     
+    // Download media as buffer
     sock.downloadMediaMessage = async (message) => {
         const mime = (message.msg || message).mimetype || '';
         const messageType = message.mtype ? message.mtype.replace(/Message/gi, '') : mime.split('/')[0];
@@ -849,6 +850,7 @@ async function startBot() {
         return buffer;
     };
     
+    // Get file
     sock.getFile = async (path, returnAsFilename) => {
         let res, filename;
         const data = Buffer.isBuffer(path) 
@@ -866,13 +868,14 @@ async function startBot() {
         const type = await FileType.fromBuffer(data) || { mime: 'application/octet-stream', ext: 'bin' };
         
         if (returnAsFilename && !filename) {
-            filename = path.join(process.cwd(), 'tmp', Date.now() + '.' + type.ext);
+            filename = path.join(__dirname, 'tmp', Date.now() + '.' + type.ext);
             await fs.promises.writeFile(filename, data);
         }
         
         return { res, filename, ...type, data };
     };
     
+    // Send file
     sock.sendFile = async (jid, filePath, filename = '', caption = '', quoted, ptt = false, options = {}) => {
         const type = await sock.getFile(filePath, true);
         const { data, filename: pathFile, mime } = type;
@@ -901,6 +904,7 @@ async function startBot() {
         return sock.sendMessage(jid, message, { quoted, ...options });
     };
     
+    // Send image as sticker
     sock.sendImageAsSticker = async (jid, path, quoted, options = {}) => {
         let buff;
         try {
@@ -922,6 +926,7 @@ async function startBot() {
         return buffer;
     };
     
+    // Send video as sticker
     sock.sendVideoAsSticker = async (jid, path, quoted, options = {}) => {
         let buff;
         try {
@@ -943,6 +948,7 @@ async function startBot() {
         return buffer;
     };
     
+    // Copy and forward
     sock.copyNForward = async (jid, message, forceForward = false, options = {}) => {
         let mtype = Object.keys(message.message)[0];
         let content = await generateForwardMessageContent(message, forceForward);
@@ -968,9 +974,11 @@ async function startBot() {
         return waMessage;
     };
     
-    setInterval(cleanupOldMessages, 60 * 60 * 1000);
-    setInterval(() => cleanupJunkFiles(sock), 5 * 60 * 1000);
+    // ========== CLEANUP INTERVALS ==========
+    setInterval(cleanupOldMessages, 60 * 60 * 1000); // 1 hour
+    setInterval(() => cleanupJunkFiles(sock), 5 * 60 * 1000); // 5 minutes
     
+    // Session cleanup (2 days)
     setInterval(() => {
         try {
             if (!fs.existsSync(sessionDir)) return;
@@ -985,19 +993,21 @@ async function startBot() {
                 const stats = fs.statSync(filePath);
                 const age = now - stats.mtimeMs;
                 
-                if (age > 2 * 24 * 60 * 60 * 1000) {
+                if (age > 2 * 24 * 60 * 60 * 1000) { // 2 days
                     fs.unlinkSync(filePath);
                     log(`Removed old session file: ${file}`, 'system');
                 }
             });
-        } catch (e) {}
-    }, 12 * 60 * 60 * 1000);
+        } catch (e) {
+            // Ignore errors
+        }
+    }, 12 * 60 * 60 * 1000); // 12 hours
     
     return sock;
 }
 
 // ==================== EXPRESS SERVER ====================
-const dataDir = path.join(process.cwd(), 'data');
+const dataDir = path.join(__dirname, 'data');
 if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
 
 app.get('/', (req, res) => {
@@ -1074,8 +1084,8 @@ app.get('/', (req, res) => {
                 <p>📅 Date: ${moment().tz(timezones).format('DD/MM/YYYY')}</p>
             </div>
             <div class="footer">
-                <p>Powered by Ｍｒ Ｓｍｉｌｅ | Contact: 254107065646</p>
-                <p>© 2026 ＭＡＹＡ - ＸＭＤ</p>
+                <p>Powered by Mr Smile | Contact: 254107065646</p>
+                <p>© 2025 ＭＡＹＡ - ＸＭＤ</p>
             </div>
         </div>
     </body>
